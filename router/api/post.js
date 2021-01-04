@@ -11,7 +11,7 @@ router.get(
     [],
     async (req, res) => {
         try {
-            const post = await Post.find().sort({ date: -1 });
+            const post = await Post.find().select("id commentSize title data").sort({ date: -1 });
             res.set(header).json(post);
         } catch (erro) {
             console.error(erro.message);
@@ -21,6 +21,24 @@ router.get(
         }
     }
 );
+router.get(
+    '/:id',
+    [],
+    async (req, res) => {
+        try {
+            const post = await Post.findById(req.params.id);
+            if (!post) return res.status(404).set(header).json({
+                msg: `Cannot find ${req.params.id}`
+            });
+            res.set(header).json(post);
+        } catch (erro) {
+            console.error(erro.message);
+            res.status(500).set(header).json({
+                msg: 'Server Error'
+            });
+        }
+    }
+)
 router.delete(
     '/posts',
     [],
