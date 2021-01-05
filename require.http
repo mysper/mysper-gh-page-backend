@@ -4,3 +4,18 @@ GET http://localhost:5000/post/list
 ###
 
 GET http://localhost:5000/post/5ff15ca705e75f3ce85c898f
+
+
+###
+
+DELETE http://localhost:5000/post/post/5ff197901162620017c6a51f
+
+###
+POST http://localhost:5000/post/new
+Content-Type: application/json
+
+{
+    "title": "JUN 5 2021 23:41 TEST-0",
+    "content": "NULL",
+    "type": "text"
+}

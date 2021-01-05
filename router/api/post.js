@@ -11,7 +11,7 @@ router.get(
     [],
     async (req, res) => {
         try {
-            const post = await Post.find().select("id commentSize title data").sort({ date: -1 });
+            const post = await Post.find().select("id commentSize title date").sort({ date: -1 });
             res.set(header).json(post);
         } catch (erro) {
             console.error(erro.message);
