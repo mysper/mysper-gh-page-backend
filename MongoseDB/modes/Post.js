@@ -16,15 +16,22 @@ const PostSchema = new Schema({
     },
     comment: [{
         name: String,
-        content: String,
-        data: {
+        content: {
+            type: String,
+            require: true
+        },
+        date: {
             type: Date,
             default: Date.now()
         }
     }],
-    data: {
+    date: {
         type: Date,
         default: Date.now()
+    },
+    type: {
+        type: String,
+        default: "text"
     }
 });
 
