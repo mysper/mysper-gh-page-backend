@@ -2,20 +2,16 @@ const express = require('express');
 const Post = require('../../MongoseDB/modes/Post');
 const router = express.Router();
 
-const header = {
-    'Access-Control-Allow-Origin': '*'
-}
-
 router.get(
     '/list',
     [],
     async (req, res) => {
         try {
             const post = await Post.find().select("id commentSize title date").sort({ date: -1 });
-            res.set(header).json(post);
+            res.json(post);
         } catch (erro) {
             console.error(erro.message);
-            res.status(500).set(header).json({
+            res.status(500).json({
                 msg: 'Server Error'
             });
         }
@@ -27,13 +23,13 @@ router.get(
     async (req, res) => {
         try {
             const post = await Post.findById(req.params.id);
-            if (!post) return res.status(404).set(header).json({
+            if (!post) return res.status(404).json({
                 msg: `Cannot find ${req.params.id}`
             });
-            res.set(header).json(post);
+            res.json(post);
         } catch (erro) {
             console.error(erro.message);
-            res.status(500).set(header).json({
+            res.status(500).json({
                 msg: 'Server Error'
             });
         }
@@ -57,17 +53,17 @@ router.delete(
                 }
             }
 
-            res.set(header).json({
+            res.json({
                 status: status
             });
         } catch (err) {
             console.error(err.message);
             if (err.kind === "ObjectId") {
-                return res.status(404).set(header).json({
+                return res.status(404).json({
                     msg: "Post not found"
                 });
             }
-            res.status(500).set(header).json({
+            res.status(500).json({
                 msg: 'Server Error'
             });
         }
@@ -81,12 +77,12 @@ router.delete(
             const post = await Post.findById(req.params.id);
 
             if (!post) {
-                return res.status(404).set(header).json({
+                return res.status(404).json({
                     msg: "Post not found"
                 });
             }
             await post.remove();
-            res.set(header).json({
+            res.json({
                 msg: "Post removed"
             });
         } catch (err) {
@@ -96,7 +92,7 @@ router.delete(
                     msg: "Post not found"
                 });
             }
-            res.status(500).set(header).json({
+            res.status(500).json({
                 msg: 'Server Error'
             });
         }
@@ -112,7 +108,7 @@ router.post(
             content
         });
         const post = await newPost.save();
-        res.set(header).json(post);
+        res.json(post);
     }
 );
 
