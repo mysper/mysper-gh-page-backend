@@ -102,10 +102,8 @@ router.post(
     '/new',
     [],
     async (req, res) => {
-        const { title, content } = req.body;
         const newPost = new Post({
-            title,
-            content
+            ...req.body
         });
         const post = await newPost.save();
         res.json(post);
