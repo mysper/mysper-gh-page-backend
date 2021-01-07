@@ -1,7 +1,7 @@
 const express = require('express');
 const Post = require('../../MongoseDB/modes/Post');
 const router = express.Router();
-
+const check = require('../checkPassword');
 router.get(
     '/list',
     [],
@@ -37,7 +37,7 @@ router.get(
 )
 router.delete(
     '/posts',
-    [],
+    [check],
     async (req, res) => {
         try {
             const posts = req.body;
@@ -71,7 +71,7 @@ router.delete(
 );
 router.delete(
     '/post/:id',
-    [],
+    [check],
     async (req, res) => {
         try {
             const post = await Post.findById(req.params.id);
@@ -100,7 +100,7 @@ router.delete(
 );
 router.post(
     '/new',
-    [],
+    [check],
     async (req, res) => {
         const { type, title, content } = req.body;
         if (type === 'link') ref = content;
