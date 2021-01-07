@@ -32,7 +32,8 @@ const PostSchema = new Schema({
     type: {
         type: String,
         default: "text"
-    }
+    },
+    ref: String
 });
 
 module.exports = Post = mongoose.model("posts", PostSchema);
