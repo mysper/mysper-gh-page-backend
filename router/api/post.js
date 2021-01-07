@@ -7,7 +7,7 @@ router.get(
     [],
     async (req, res) => {
         try {
-            const post = await Post.find().select("id commentSize title date").sort({ date: -1 });
+            const post = await Post.find().select("id commentSize title date type ref").sort({ date: -1 });
             res.json(post);
         } catch (erro) {
             console.error(erro.message);
@@ -102,8 +102,11 @@ router.post(
     '/new',
     [],
     async (req, res) => {
+        const { type, title, content } = req.body;
+        if (type === 'link') ref = content;
+        else ref = null;
         const newPost = new Post({
-            ...req.body
+            type, title, ref, content
         });
         const post = await newPost.save();
         res.json(post);
